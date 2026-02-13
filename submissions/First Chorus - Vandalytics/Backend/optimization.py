@@ -15,7 +15,6 @@ SCREEN_HEIGHT = user32.GetSystemMetrics(1)
 
 WINDOW_NAME = "Overlay Guide"
 
-
 STEP1_X = 0.875
 STEP1_Y = 0.955
 STEP1_W = 0.05
@@ -47,7 +46,6 @@ def percent_box(x_p, y_p, w_p, h_p):
     x2 = int(x1 + SCREEN_WIDTH * w_p)
     y2 = int(y1 + SCREEN_HEIGHT * h_p)
     return (x1, y1, x2, y2)
-
 steps = [
     {
         "box": percent_box(STEP1_X, STEP1_Y, STEP1_W, STEP1_H),
@@ -66,7 +64,6 @@ steps = [
         "label": "Select Best Performance"
     }
 ]
-
 current_step = 0
 running = True
 #create window
@@ -76,7 +73,6 @@ cv2.setWindowProperty(
     cv2.WND_PROP_FULLSCREEN,
     cv2.WINDOW_FULLSCREEN
 )
-
 hwnd = win32gui.FindWindow(None, WINDOW_NAME)
 #transperent and clickthrough
 win32gui.SetWindowLong(
@@ -105,18 +101,15 @@ def force_topmost():
         win32con.SWP_NOACTIVATE |
         win32con.SWP_SHOWWINDOW
     )
-
 #checking for clicks
 def on_click(x, y, button, pressed):
     global current_step, running
 
     if not pressed or current_step >= len(steps):
         return
-
     if current_step == 1:
         current_step += 1
         return
-
     x1, y1, x2, y2 = steps[current_step]["box"]
 
     if x1 <= x <= x2 and y1 <= y <= y2:
@@ -188,12 +181,9 @@ while running:
                 (0, 0, 255),
                 2
             )
-
     cv2.imshow(WINDOW_NAME, overlay)
-
     if cv2.waitKey(1) & 0xFF == 27:
         break
-
 listener.stop()
 cv2.destroyAllWindows()
 sys.exit()
